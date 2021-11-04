@@ -1,0 +1,326 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <locale.h>
+
+struct projeto{
+  int  codigo, ano, status;
+  char titulo [150];
+  char descricao[180];
+  char gerenteResponsavel[150];
+  char empresa [150];
+  int quantidadeLinhas;
+  char cidade[150];
+  char estado[150];
+};
+
+#define MAX 200
+#define aFazer   "1- A Fazer"
+#define fazendo   "2- Fazendo"
+#define concluido "3- Concluido"
+
+struct projeto projetos[MAX];
+int menu, indice = 0;
+
+
+void exibirMenu();
+void cadastrarProjetos();
+void mostrarTodos();
+void mostrarPorEmpresa();
+void mostrarAFazer();
+void mostrarFazendo();
+void mostrarConcluido();
+void mostrarPorCodigo();
+
+int main(){
+  setlocale(LC_ALL, "Portuguese");
+	
+	do{
+  	 exibirMenu();
+  	
+	  switch(menu){
+        case 1:
+      	  cadastrarProjetos();
+      	  break;
+        case 2:
+          mostrarTodos();
+      	  break;
+        case 3:
+      	  mostrarAFazer();
+      	  break;
+        case 4:
+      	  mostrarFazendo();
+      	  break;
+        case 5:
+      	  mostrarConcluido();
+      	  break;
+        case 6:
+      	  mostrarPorCodigo();
+      	  break;
+        case 7:
+      	  mostrarPorEmpresa();
+      	  break;
+        case 8:
+      	  break;
+        default:
+          printf("Menu Inválido!!\n\n");
+    }
+    
+	if(menu!=8);
+      system("pause");
+   }while(menu!=8);
+    return 0;	
+}
+
+void exibirMenu(){
+  system("cls");
+  printf("         Escolha o menu desejado:         \n\n");
+  printf("1 - Cadastrar projeto:\n");
+  printf("2 - Mostrar todos os projetos:\n");
+  printf("3 - Mostrar projetos com status: A Fazer\n");
+  printf("4 - Mostrar projetos com status: Fazendo\n");
+  printf("5 - Mostrar projetos com status: Concluído\n");
+  printf("6 - Mostrar projetos por código:\n");
+  printf("7 - Mostrar projetos por empresa:\n");
+  printf("8 - Sair \n\n");
+  printf("Digite: ");
+  scanf("%d", &menu);
+  fflush(stdin);	
+}
+
+void cadastrarProjetos(){
+  struct projeto projetoNovo;
+  system("cls");
+  printf("Cadastro de projetos:\n\n");
+  
+  if (indice<MAX){
+  	projetoNovo.codigo = indice + 1;
+  	printf("Informe o título: ");
+  	fgets(projetoNovo.titulo,150,stdin);
+  	printf("Informe  a descrição: ");
+	fgets(projetoNovo.descricao,150,stdin);
+	printf("Informe  a empresa: ");
+	fgets(projetoNovo.empresa,150,stdin);
+	printf("Informe  a cidade: ");
+	fgets(projetoNovo.cidade,150,stdin);
+	printf("Informe  o estado: ");
+	fgets(projetoNovo.estado,150,stdin);
+	printf("Informe a quantidade de linhas: ");
+	scanf("%d", &projetoNovo.quantidadeLinhas);
+	printf("Informe o ano: ");
+	scanf("%d", &projetoNovo.ano);
+	fflush(stdin);
+  	printf("Informe o gerente responsável: ");
+	fgets(projetoNovo.gerenteResponsavel,150,stdin);
+  	printf("Escolha o status do projeto:\n");
+  	printf("1-A Fazer 2-Fazendo 3-Concluído\n\n");
+  	printf("Digite: ");
+  	scanf("%d", &projetoNovo.status);
+  	fflush(stdin);
+  	
+  	projetos[indice] = projetoNovo;
+  	indice++;
+  	printf("Cadastrado com sucesso!\n\n");
+  }else{
+  	printf("Falha ao cadastrar!\n\n");
+  }
+}
+void mostrarTodos(){
+  int i;
+  char status[150];	
+	system("cls");
+    printf("Mostrar todos os projetos:\n\n");	
+  
+  if(indice>0){
+    for(i=0; i<indice; i++){
+    
+	  switch(projetos[i].status){
+	  	case 1:
+	  	  strcpy(status, aFazer);	
+	  	  break;
+	  	case 2:
+	  	  strcpy(status, fazendo);		
+	  	  break;
+		case 3:
+		  strcpy(status, concluido);		
+	  	  break;
+	  	default:	  
+	  	  strcpy(status, aFazer);	
+	  }	
+      printf("Código: %d\n", projetos[i].codigo);	
+      printf("Título: %s", projetos[i].titulo);	
+      printf("Descrição: %s", projetos[i].descricao);	
+      printf("Empresa: %s", projetos[i].empresa);
+      printf("Cidade: %s", projetos[i].cidade);
+      printf("Estado: %s", projetos[i].estado);
+      printf("Quantidade de linhas: %d\n", projetos[i].quantidadeLinhas);
+      printf("Ano: %d\n", projetos[i].ano);
+      printf("Gerente Responsáavel: %s", projetos[i].gerenteResponsavel);
+      printf("Status: %s\n\n",status);
+    }
+  }else{
+     printf("Nenhum projeto encontrado!\n\n ");	
+  }
+}
+void mostrarPorEmpresa(){
+  int i;
+  char status[150];	
+	system("cls");
+    printf("Mostrar todas empresas:\n\n");	
+  
+  if(indice>0){
+    for(i=0; i<indice; i++){
+    
+	  switch(projetos[i].status){
+	  	case 1:
+	  	  strcpy(status, aFazer);	
+	  	  break;
+	  	case 2:
+	  	  strcpy(status, fazendo);		
+	  	  break;
+		case 3:
+		  strcpy(status, concluido);		
+	  	  break;
+	  	default:	  
+	  	  strcpy(status, aFazer);	
+	  }	
+      printf("Código: %d\n", projetos[i].codigo);	
+      printf("Título: %s", projetos[i].titulo);	
+      printf("Descrição: %s", projetos[i].descricao);	
+      printf("Empresa: %s", projetos[i].empresa);
+      printf("Cidade: %s", projetos[i].cidade);
+      printf("Estado: %s", projetos[i].estado);
+      printf("Quantidade de linhas: %d\n", projetos[i].quantidadeLinhas);
+      printf("Ano: %d\n", projetos[i].ano);
+      printf("Gerente Responsáavel: %s", projetos[i].gerenteResponsavel);
+      printf("Status: %s\n\n",status);
+    }
+  }else{
+     printf("Nenhum projeto encontrado!\n\n ");	
+  }
+}
+void mostrarAFazer(){
+   int i;
+  char status[150];	
+  system("cls");
+  printf("Mostrar projetos a fazer:\n\n");
+  
+  if(indice>0){
+  	 strcpy(status, aFazer);
+  	 for(i=0; i<indice; i++){
+	  	if(projetos[i].status==1){
+	      printf("Código: %d\n", projetos[i].codigo);	
+          printf("Título: %s", projetos[i].titulo);	
+          printf("Descrição: %s", projetos[i].descricao);	
+          printf("Empresa: %s", projetos[i].empresa);
+          printf("Cidade: %s", projetos[i].cidade);
+          printf("Estado: %s", projetos[i].estado);
+          printf("Quantidade de linhas: %d\n", projetos[i].quantidadeLinhas);  
+          printf("Ano: %d\n", projetos[i].ano);
+          printf("Gerente Responsáavel: %s", projetos[i].gerenteResponsavel);
+          printf("Status: %s\n\n",status);
+    }
+   }
+  }else{
+     printf("Nenhum projeto encontrado!\n\n ");	
+  }
+}
+void mostrarFazendo(){
+   int i;
+  char status[150];	
+	system("cls");
+    printf("Mostrar projetos fazendo:\n\n");	
+    
+	if(indice>0){
+  	  strcpy(status, fazendo);
+  	  for(i=0; i<indice; i++){
+	  	if(projetos[i].status==2){
+	      printf("Código: %d\n", projetos[i].codigo);	
+          printf("Título: %s", projetos[i].titulo);	
+          printf("Descrição: %s", projetos[i].descricao);	
+          printf("Empresa: %s", projetos[i].empresa);
+          printf("Cidade: %s", projetos[i].cidade);
+          printf("Estado: %s", projetos[i].estado);
+          printf("Quantidade de linhas: %d\n", projetos[i].quantidadeLinhas);
+          printf("Ano: %d\n", projetos[i].ano);
+          printf("Gerente Responsáavel: %s", projetos[i].gerenteResponsavel);
+          printf("Status: %s\n\n",status);
+    }
+   }
+  }else{
+     printf("Nenhum projeto encontrado!\n\n ");	
+  }
+}
+void mostrarConcluido(){
+   int i;
+  char status[150];	
+	system("cls");
+    printf("Mostrar projetos concluido:\n\n");	
+    
+	if(indice>0){
+  	  strcpy(status, concluido);
+  	  for(i=0; i<indice; i++){
+	  	if(projetos[i].status==3){
+	      printf("Código: %d\n", projetos[i].codigo);	
+          printf("Título: %s", projetos[i].titulo);	
+          printf("Descrição: %s", projetos[i].descricao);	
+          printf("Empresa: %s", projetos[i].empresa);
+          printf("Cidade: %s", projetos[i].cidade);
+          printf("Estado: %s", projetos[i].estado);
+          printf("Quantidade de linhas: %d\n", projetos[i].quantidadeLinhas);
+          printf("Ano: %d\n", projetos[i].ano);
+          printf("Gerente Responsáavel: %s", projetos[i].gerenteResponsavel);
+          printf("Status: %s\n\n",status);
+    }
+   }
+  }else{
+     printf("Nenhum projeto encontrado!\n\n ");	
+  }
+}
+void mostrarPorCodigo(){
+   int i, codigo;
+  char status[150];	
+  bool achou = false;
+  system("cls");
+  printf("Mostrar projetos por código:\n\n");	
+  
+  	if(indice>0){
+  	  printf("Digite o código do projeto:");
+  	  scanf("%d", &codigo);
+  	  fflush(stdin);
+  	  for(i=0; i<indice; i++){
+	  	if(projetos[i].codigo== codigo){
+	  		 switch(projetos[i].status){
+	  	case 1:
+	  	  strcpy(status, aFazer);	
+	  	  break;
+	  	case 2:
+	  	  strcpy(status, fazendo);		
+	  	  break;
+		case 3:
+		  strcpy(status, concluido);		
+	  	  break;
+	  	default:	  
+	  	  strcpy(status, aFazer);	
+	    }	
+	  	  printf("Código: %d\n", projetos[i].codigo);	
+          printf("Título: %s", projetos[i].titulo);	
+          printf("Descrição: %s", projetos[i].descricao);
+		  printf("Empresa: %s", projetos[i].empresa);
+		  printf("Cidade: %s", projetos[i].cidade);
+          printf("Estado: %s", projetos[i].estado);
+          printf("Quantidade de linhas: %d\n", projetos[i].quantidadeLinhas);
+		  printf("Ano: %d\n", projetos[i].ano);
+          printf("Gerente Responsáavel: %s", projetos[i].gerenteResponsavel);
+          printf("Status: %s\n\n",status);
+          achou = true;
+    }
+   }
+     if(!achou)
+       printf("Nenhum projeto encontrado!\n\n");
+  }else{
+     printf("Nenhum projeto encontrado!\n\n ");	
+  }
+
+}
